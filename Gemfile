@@ -3,10 +3,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.1.4'
 
-gem 'rails-api'
-
 gem 'spring', :group => :development
 
+gem 'listen'
 
 gem 'mysql2'
 

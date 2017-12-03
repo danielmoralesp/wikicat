@@ -1,6 +1,6 @@
 class CreateCategories < ActiveRecord::Migration[5.1]
   def change
-    create_table :categories, {:id =&gt; false} do |t|
+    create_table :categories, {:id => false} do |t|
       t.integer :cat_id
       t.string :cat_title
       t.integer :cat_pages

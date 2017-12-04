@@ -9,6 +9,8 @@ gem 'listen'
 
 gem 'mysql2'
 
+# Serializer for JSON
+gem 'active_model_serializers'
 
 
 # To use ActiveModel has_secure_password

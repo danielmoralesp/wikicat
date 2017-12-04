@@ -11,6 +11,8 @@ gem 'mysql2'
 
 # Serializer for JSON
 gem 'active_model_serializers'
+# respond_to
+gem 'responders'
 
 
 # To use ActiveModel has_secure_password

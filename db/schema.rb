@@ -10,26 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203194746) do
+ActiveRecord::Schema.define(version: 20171204154839) do
 
-  create_table "categories", primary_key: "cat_id", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "cat_title"
-    t.integer "cat_pages"
-    t.integer "cat_subcats"
-    t.integer "cat_files"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "categories", primary_key: "cat_id", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=binary" do |t|
+    t.binary "cat_title", limit: 255, default: "", null: false
+    t.integer "cat_pages", default: 0, null: false
+    t.integer "cat_subcats", default: 0, null: false
+    t.integer "cat_files", default: 0, null: false
+    t.index ["cat_pages"], name: "cat_pages"
   end
 
-  create_table "links", primary_key: "cl_from", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "cl_to"
-    t.binary "cl_sortkey"
-    t.date "cl_timestamp"
-    t.binary "cl_sortkey_prefix"
-    t.binary "cl_collation"
-    t.string "cl_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "links", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=binary" do |t|
+    t.integer "cl_from", default: 0, null: false, unsigned: true
+    t.binary "cl_to", limit: 255, default: "", null: false
+    t.binary "cl_sortkey", limit: 230, default: "", null: false
+    t.timestamp "cl_timestamp", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.binary "cl_sortkey_prefix", limit: 255, default: "", null: false
+    t.binary "cl_collation", limit: 32, default: "", null: false
+    t.string "cl_type", limit: 6, default: "page", null: false
+    t.index ["cl_collation"], name: "cl_collation"
+    t.index ["cl_from", "cl_to"], name: "cl_from", unique: true
+    t.index ["cl_sortkey"], name: "index_links_on_cl_sortkey"
+    t.index ["cl_to", "cl_timestamp"], name: "cl_timestamp"
+    t.index ["cl_to", "cl_type", "cl_sortkey", "cl_from"], name: "cl_sortkey"
   end
 
 end
